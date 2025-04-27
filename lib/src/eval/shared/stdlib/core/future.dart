@@ -9,31 +9,30 @@ import 'package:dart_eval/stdlib/core.dart';
 class $Future<T> implements Future<T>, $Instance {
   /// Configure [$Future] for runtime in a [Runtime]
   static void configureForRuntime(Runtime runtime) {
-    runtime.registerBridgeFunc(
-        'dart:core', 'Future.delayed', const _$Future_delayed().call);
+    runtime.registerBridgeFunc('dart:core', 'Future.delayed', const _$Future_delayed().call);
   }
 
-  static const $declaration = BridgeClassDef(
-      BridgeClassType(BridgeTypeRef(CoreTypes.future), isAbstract: true),
+  static const $declaration = BridgeClassDef(BridgeClassType(BridgeTypeRef(CoreTypes.future), isAbstract: true),
       constructors: {
         'delayed': BridgeConstructorDef(BridgeFunctionDef(
             returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.future)),
-            params: [
-              BridgeParameter(
-                  'duration', BridgeTypeAnnotation($Duration.$type), false)
-            ],
+            params: [BridgeParameter('duration', BridgeTypeAnnotation($Duration.$type), false)],
             namedParams: []))
       },
       methods: {
-        'then': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.future)),
-            params: [
-              BridgeParameter(
-                  'onValue',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.function)),
-                  false)
-            ],
-            namedParams: []))
+        'then': BridgeMethodDef(
+          BridgeFunctionDef(
+              returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.future)),
+              params: [BridgeParameter('onValue', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.function)), false)],
+              namedParams: []),
+        ),
+        'catchError': BridgeMethodDef(
+          BridgeFunctionDef(returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.future)), params: [
+            BridgeParameter("onError", BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.function)), false),
+          ], namedParams: [
+            BridgeParameter("test", BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.function)), true),
+          ]),
+        ),
       },
       getters: {},
       setters: {},
@@ -46,8 +45,7 @@ class $Future<T> implements Future<T>, $Instance {
   final Future<T> $value;
 
   @override
-  Future get $reified =>
-      $value.then((value) => value is $Value ? value.$value : value);
+  Future get $reified => $value.then((value) => value is $Value ? value.$value : value);
 
   final $Instance _superclass;
 
@@ -56,6 +54,8 @@ class $Future<T> implements Future<T>, $Instance {
     switch (identifier) {
       case 'then':
         return __then;
+      case 'catchError':
+        return __catchError;
       default:
         return _superclass.$getProperty(runtime, identifier);
     }
@@ -71,22 +71,37 @@ class $Future<T> implements Future<T>, $Instance {
   Stream<T> asStream() => $value.asStream();
 
   @override
-  Future<T> catchError(Function onError, {bool Function(Object error)? test}) =>
-      $value.catchError(onError, test: test);
+  Future<T> catchError(Function onError, {bool Function(Object error)? test}) => $value.catchError(onError, test: test);
+
+  static const $Function __catchError = $Function(_catchError);
+
+  static $Value? _catchError(Runtime runtime, $Value? target, List<$Value?> args) {
+    final $t = target as $Future;
+    final $onError = args[0] as EvalFunction;
+    final $test = args[1] as EvalFunction?;
+
+    if ($test != null) {
+      final testResult = $test.call(runtime, target, [runtime.wrap($test)]) as bool;
+      if (testResult != true) {
+        return $Future.wrap(Future.error('Test failed'));
+      }
+    }
+
+    final $result = ($t.$value).catchError((error) => $onError.call(runtime, target, [runtime.wrap(error)]));
+    return $Future.wrap($result);
+  }
 
   static const $Function __then = $Function(_then);
 
   static $Value? _then(Runtime runtime, $Value? target, List<$Value?> args) {
     final $t = target as $Future;
     final $then = args[0] as EvalFunction;
-    final $result = ($t.$value)
-        .then((value) => $then.call(runtime, target, [runtime.wrap(value)]));
+    final $result = ($t.$value).then((value) => $then.call(runtime, target, [runtime.wrap(value)]));
     return $Future.wrap($result);
   }
 
   @override
-  Future<R> then<R>(FutureOr<R> Function(T value) onValue,
-          {Function? onError}) =>
+  Future<R> then<R>(FutureOr<R> Function(T value) onValue, {Function? onError}) =>
       $value.then(onValue, onError: onError);
 
   @override
@@ -94,8 +109,7 @@ class $Future<T> implements Future<T>, $Instance {
       $value.timeout(timeLimit, onTimeout: onTimeout);
 
   @override
-  Future<T> whenComplete(FutureOr<void> Function() action) =>
-      $value.whenComplete(action);
+  Future<T> whenComplete(FutureOr<void> Function() action) => $value.whenComplete(action);
 }
 
 class _$Future_delayed implements EvalCallable {

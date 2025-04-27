@@ -6,83 +6,72 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   $Map.wrap(this.$value);
 
   static const $declaration = BridgeClassDef(
-      BridgeClassType(BridgeTypeRef(CoreTypes.map),
-          generics: {'K': BridgeGenericParam(), 'V': BridgeGenericParam()}),
+      BridgeClassType(BridgeTypeRef(CoreTypes.map), generics: {'K': BridgeGenericParam(), 'V': BridgeGenericParam()}),
       constructors: {},
       methods: {
         '[]': BridgeMethodDef(
-            BridgeFunctionDef(params: [
-              BridgeParameter(
-                  'key', BridgeTypeAnnotation(BridgeTypeRef.ref('K')), false),
-            ], returns: BridgeTypeAnnotation(BridgeTypeRef.ref('V'))),
-            isStatic: false),
+          BridgeFunctionDef(params: [
+            BridgeParameter('key', BridgeTypeAnnotation(BridgeTypeRef.ref('K')), false),
+          ], returns: BridgeTypeAnnotation(BridgeTypeRef.ref('V'))),
+          isStatic: false,
+        ),
         '[]=': BridgeMethodDef(
-            BridgeFunctionDef(params: [
-              BridgeParameter(
-                  'key', BridgeTypeAnnotation(BridgeTypeRef.ref('K')), false),
-              BridgeParameter(
-                  'value', BridgeTypeAnnotation(BridgeTypeRef.ref('V')), false),
-            ], returns: BridgeTypeAnnotation(BridgeTypeRef.ref('V'))),
-            isStatic: false),
+          BridgeFunctionDef(params: [
+            BridgeParameter('key', BridgeTypeAnnotation(BridgeTypeRef.ref('K')), false),
+            BridgeParameter('value', BridgeTypeAnnotation(BridgeTypeRef.ref('V')), false),
+          ], returns: BridgeTypeAnnotation(BridgeTypeRef.ref('V'))),
+          isStatic: false,
+        ),
         'length': BridgeMethodDef(
-            BridgeFunctionDef(
-                params: [],
-                returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.int))),
-            isStatic: false),
+          BridgeFunctionDef(params: [], returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.int))),
+          isStatic: false,
+        ),
         'cast': BridgeMethodDef(
-            BridgeFunctionDef(
-                generics: {
-                  'RK': BridgeGenericParam(),
-                  'RV': BridgeGenericParam()
-                },
-                params: [],
-                returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.map,
-                    [BridgeTypeRef.ref('RK'), BridgeTypeRef.ref('RV')]))),
-            isStatic: false),
+          BridgeFunctionDef(
+              generics: {'RK': BridgeGenericParam(), 'RV': BridgeGenericParam()},
+              params: [],
+              returns: BridgeTypeAnnotation(
+                  BridgeTypeRef(CoreTypes.map, [BridgeTypeRef.ref('RK'), BridgeTypeRef.ref('RV')]))),
+          isStatic: false,
+        ),
         'addAll': BridgeMethodDef(
-            BridgeFunctionDef(
-                params: [
-                  BridgeParameter(
-                      'other',
-                      BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.map,
-                          [BridgeTypeRef.ref('K'), BridgeTypeRef.ref('V')])),
-                      false),
-                ],
-                returns:
-                    BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.voidType))),
-            isStatic: false),
-        'containsKey': BridgeMethodDef(
           BridgeFunctionDef(params: [
             BridgeParameter(
-                'key',
-                BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.object),
-                    nullable: true),
+                'other',
+                BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.map, [BridgeTypeRef.ref('K'), BridgeTypeRef.ref('V')])),
                 false),
+          ], returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.voidType))),
+          isStatic: false,
+        ),
+        'containsKey': BridgeMethodDef(
+          BridgeFunctionDef(params: [
+            BridgeParameter('key', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.object), nullable: true), false),
           ], returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool))),
           isStatic: false,
         ),
         'remove': BridgeMethodDef(
-            BridgeFunctionDef(params: [
-              BridgeParameter(
-                  'key',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.object),
-                      nullable: true),
-                  false),
-            ], returns: BridgeTypeAnnotation(BridgeTypeRef.ref('V'))),
-            isStatic: false),
+          BridgeFunctionDef(params: [
+            BridgeParameter('key', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.object), nullable: true), false),
+          ], returns: BridgeTypeAnnotation(BridgeTypeRef.ref('V'))),
+          isStatic: false,
+        ),
+        'forEach': BridgeMethodDef(
+          BridgeFunctionDef(returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.voidType)), params: [
+            BridgeParameter(
+              "action",
+              BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.function)),
+              false,
+            ),
+          ]),
+        ),
       },
       getters: {
-        'entries': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.iterable)))),
+        'entries': BridgeMethodDef(BridgeFunctionDef(returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.iterable)))),
         'isEmpty': BridgeMethodDef(
-            BridgeFunctionDef(
-                params: [],
-                returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool))),
+            BridgeFunctionDef(params: [], returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool))),
             isStatic: false),
         'isNotEmpty': BridgeMethodDef(
-            BridgeFunctionDef(
-                params: [],
-                returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool))),
+            BridgeFunctionDef(params: [], returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool))),
             isStatic: false),
       },
       setters: {},
@@ -117,6 +106,8 @@ class $Map<K, V> implements Map<K, V>, $Instance {
         return $bool($value.isEmpty);
       case 'isNotEmpty':
         return $bool($value.isNotEmpty);
+      case 'forEach':
+        return __$forEach;
     }
     return _superclass.$getProperty(runtime, identifier);
   }
@@ -128,8 +119,7 @@ class $Map<K, V> implements Map<K, V>, $Instance {
 
   static const $Function __indexGet = $Function(_indexGet);
 
-  static $Value? _indexGet(
-      Runtime runtime, $Value? target, List<$Value?> args) {
+  static $Value? _indexGet(Runtime runtime, $Value? target, List<$Value?> args) {
     final idx = args[0]!;
     final map = target!.$value as Map;
     return map[idx];
@@ -137,8 +127,7 @@ class $Map<K, V> implements Map<K, V>, $Instance {
 
   static const $Function __indexSet = $Function(_indexSet);
 
-  static $Value? _indexSet(
-      Runtime runtime, $Value? target, List<$Value?> args) {
+  static $Value? _indexSet(Runtime runtime, $Value? target, List<$Value?> args) {
     final idx = args[0]!;
     final value = args[1]!;
     return (target!.$value as Map)[idx] = value;
@@ -160,8 +149,7 @@ class $Map<K, V> implements Map<K, V>, $Instance {
 
   static const $Function __containsKey = $Function(_containsKey);
 
-  static $Value? _containsKey(
-      Runtime runtime, $Value? target, List<$Value?> args) {
+  static $Value? _containsKey(Runtime runtime, $Value? target, List<$Value?> args) {
     return $bool((target!.$value as Map).containsKey(args[0]));
   }
 
@@ -172,8 +160,7 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   }
 
   @override
-  Map get $reified => $value.map((k, v) =>
-      MapEntry(k is $Value ? k.$reified : k, v is $Value ? v.$reified : v));
+  Map get $reified => $value.map((k, v) => MapEntry(k is $Value ? k.$reified : k, v is $Value ? v.$reified : v));
 
   @override
   int $getRuntimeType(Runtime runtime) => runtime.lookupType(CoreTypes.map);
@@ -192,8 +179,7 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   void addAll(Map<K, V> other) => $value.addAll(other);
 
   @override
-  void addEntries(Iterable<MapEntry<K, V>> newEntries) =>
-      $value.addEntries(newEntries);
+  void addEntries(Iterable<MapEntry<K, V>> newEntries) => $value.addEntries(newEntries);
 
   @override
   Map<RK, RV> cast<RK, RV>() => $value.cast<RK, RV>();
@@ -219,6 +205,16 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   @override
   void forEach(void Function(K key, V value) action) {
     return $value.forEach(action);
+  }
+  static const __$forEach = $Function(_$forEach);
+  static $Value? _$forEach(
+      Runtime runtime, $Value? target, List<$Value?> args) {
+    final $this = target?.$value as Map;
+    final action = args[0] as EvalCallable;
+    $this.forEach(
+      ( key, value) => action.call(runtime, null, [key, value]),
+    );
+    return null;
   }
 
   @override
@@ -247,8 +243,7 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   V? remove(Object? key) => $value.remove(key);
 
   @override
-  void removeWhere(bool Function(K key, V value) test) =>
-      $value.removeWhere(test);
+  void removeWhere(bool Function(K key, V value) test) => $value.removeWhere(test);
 
   @override
   V update(K key, V Function(V value) update, {V Function()? ifAbsent}) =>
@@ -274,18 +269,14 @@ class $MapEntry<K, V> implements MapEntry<K, V>, $Instance {
       BridgeClassType(BridgeTypeRef(CoreTypes.mapEntry),
           generics: {'K': BridgeGenericParam(), 'V': BridgeGenericParam()}),
       constructors: {
-        '': BridgeConstructorDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.mapEntry)),
-            params: [
-              BridgeParameter(
-                  'key', BridgeTypeAnnotation(BridgeTypeRef.ref('K')), false),
-              BridgeParameter(
-                  'value', BridgeTypeAnnotation(BridgeTypeRef.ref('V')), false),
-            ],
-            generics: {
-              'K': BridgeGenericParam(),
-              'V': BridgeGenericParam()
-            }))
+        '': BridgeConstructorDef(
+            BridgeFunctionDef(returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.mapEntry)), params: [
+          BridgeParameter('key', BridgeTypeAnnotation(BridgeTypeRef.ref('K')), false),
+          BridgeParameter('value', BridgeTypeAnnotation(BridgeTypeRef.ref('V')), false),
+        ], generics: {
+          'K': BridgeGenericParam(),
+          'V': BridgeGenericParam()
+        }))
       },
       getters: {},
       setters: {},
@@ -300,8 +291,7 @@ class $MapEntry<K, V> implements MapEntry<K, V>, $Instance {
 
   late final $Instance _superclass = $Object($value);
 
-  static $Value? _$new(
-      final Runtime runtime, final $Value? target, final List<$Value?> args) {
+  static $Value? _$new(final Runtime runtime, final $Value? target, final List<$Value?> args) {
     return $MapEntry.wrap(MapEntry(args[0], args[1]));
   }
 
@@ -318,8 +308,7 @@ class $MapEntry<K, V> implements MapEntry<K, V>, $Instance {
   }
 
   @override
-  int $getRuntimeType(Runtime runtime) =>
-      runtime.lookupType(CoreTypes.mapEntry);
+  int $getRuntimeType(Runtime runtime) => runtime.lookupType(CoreTypes.mapEntry);
 
   @override
   MapEntry<K, V> get $reified => $value;
