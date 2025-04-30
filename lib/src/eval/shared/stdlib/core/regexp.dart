@@ -7,54 +7,36 @@ class $RegExp implements $Instance {
   static const $type = BridgeTypeRef(BridgeTypeSpec('dart:core', 'RegExp'));
 
   /// Compile-time bridge declaration of [RegExp]
-  static const $declaration = BridgeClassDef(
-      BridgeClassType($type, isAbstract: true, $extends: $Pattern.$type),
+  static const $declaration = BridgeClassDef(BridgeClassType($type, isAbstract: true, $extends: $Pattern.$type),
       constructors: {
-        '': BridgeConstructorDef(
-            BridgeFunctionDef(returns: BridgeTypeAnnotation($type), params: [
-          BridgeParameter('source',
-              BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
+        '': BridgeConstructorDef(BridgeFunctionDef(returns: BridgeTypeAnnotation($type), params: [
+          BridgeParameter('source', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
         ], namedParams: [
-          BridgeParameter('multiLine',
-              BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
-          BridgeParameter('caseSensitive',
-              BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
-          BridgeParameter('unicode',
-              BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
-          BridgeParameter('dotAll',
-              BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
+          BridgeParameter('multiLine', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
+          BridgeParameter('caseSensitive', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
+          BridgeParameter('unicode', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
+          BridgeParameter('dotAll', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), false),
         ]))
       },
       methods: {
-        'hasMatch': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)),
-            params: [
-              BridgeParameter('input',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
-            ])),
-        'firstMatch': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation($RegExpMatch.$type, nullable: true),
-            params: [
-              BridgeParameter('input',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
-            ])),
+        'hasMatch':
+            BridgeMethodDef(BridgeFunctionDef(returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.bool)), params: [
+          BridgeParameter('input', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
+        ])),
+        'firstMatch': BridgeMethodDef(
+            BridgeFunctionDef(returns: BridgeTypeAnnotation($RegExpMatch.$type, nullable: true), params: [
+          BridgeParameter('input', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
+        ])),
         'allMatches': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(
-                BridgeTypeRef(CoreTypes.iterable, [$RegExpMatch.$type]),
-                nullable: true),
+            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.iterable, [$RegExpMatch.$type]), nullable: true),
             params: [
-              BridgeParameter('input',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
-              BridgeParameter('start',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.int)), true),
+              BridgeParameter('input', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
+              BridgeParameter('start', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.int)), true),
             ])),
-        'stringMatch': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string),
-                nullable: true),
-            params: [
-              BridgeParameter('input',
-                  BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
-            ]))
+        'stringMatch': BridgeMethodDef(
+            BridgeFunctionDef(returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string), nullable: true), params: [
+          BridgeParameter('input', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false),
+        ]))
       },
       wrap: true);
 
@@ -96,8 +78,7 @@ class $RegExp implements $Instance {
 
   static const $Function __hasMatch = $Function(_hasMatch);
 
-  static $Value? _hasMatch(
-      final Runtime runtime, final $Value? target, final List<$Value?> args) {
+  static $Value? _hasMatch(final Runtime runtime, final $Value? target, final List<$Value?> args) {
     target as $Value;
     final input = (args[0] as $String).$value;
     return $bool((target.$value as RegExp).hasMatch(input));
@@ -105,8 +86,7 @@ class $RegExp implements $Instance {
 
   static const $Function __firstMatch = $Function(_firstMatch);
 
-  static $Value? _firstMatch(
-      final Runtime runtime, final $Value? target, final List<$Value?> args) {
+  static $Value? _firstMatch(final Runtime runtime, final $Value? target, final List<$Value?> args) {
     target as $Value;
     final input = (args[0] as $String).$value;
     final $result = (target.$value as RegExp).firstMatch(input);
@@ -115,20 +95,17 @@ class $RegExp implements $Instance {
 
   static const $Function __allMatches = $Function(_allMatches);
 
-  static $Value? _allMatches(
-      final Runtime runtime, final $Value? target, final List<$Value?> args) {
+  static $Value? _allMatches(final Runtime runtime, final $Value? target, final List<$Value?> args) {
     target as $Value;
     final string = (args[0] as $String).$value;
     final start = (args[1] as $int?)?.$value ?? 0;
-    return $Iterable<$RegExpMatch>.wrap((target.$value as RegExp)
-        .allMatches(string, start)
-        .map((e) => $RegExpMatch.wrap(e)));
+    return $Iterable<$RegExpMatch>.wrap(
+        (target.$value as RegExp).allMatches(string, start).map((e) => $RegExpMatch.wrap(e)));
   }
 
   static const $Function __stringMatch = $Function(_stringMatch);
 
-  static $Value? _stringMatch(
-      final Runtime runtime, final $Value? target, final List<$Value?> args) {
+  static $Value? _stringMatch(final Runtime runtime, final $Value? target, final List<$Value?> args) {
     target as $Value;
     final input = (args[0] as $String).$value;
 
@@ -148,31 +125,35 @@ class $RegExp implements $Instance {
 
 class $RegExpMatch implements $Instance, RegExpMatch {
   /// Compile-time type reference to [RegExpMatch]
-  static const $type =
-      BridgeTypeRef(BridgeTypeSpec('dart:core', 'RegExpMatch'));
+  static const $type = BridgeTypeRef(BridgeTypeSpec('dart:core', 'RegExpMatch'));
 
   /// Compile-time bridge declaration of [RegExp]
   static const $declaration = BridgeClassDef(
-      BridgeClassType($type, isAbstract: true, $extends: $Match.$type),
-      constructors: {},
-      methods: {
-        'namedGroup': BridgeMethodDef(BridgeFunctionDef(
-          returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string),
-              nullable: true),
-          params: [
-            BridgeParameter('name',
-                BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false)
-          ],
-        )),
-      },
-      getters: {
-        'pattern': BridgeMethodDef(
-            BridgeFunctionDef(returns: BridgeTypeAnnotation($RegExp.$type))),
-        'groupNames': BridgeMethodDef(BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(
-                CoreTypes.iterable, [BridgeTypeRef(CoreTypes.string)]))))
-      },
-      wrap: true);
+    BridgeClassType($type, isAbstract: true, $extends: $Match.$type),
+    constructors: {},
+    methods: {
+      'namedGroup': BridgeMethodDef(
+        BridgeFunctionDef(
+          returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string), nullable: true),
+          params: [BridgeParameter('name', BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string)), false)],
+        ),
+      ),
+      'group': BridgeMethodDef(
+        BridgeFunctionDef(
+            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.string), nullable: true),
+            params: [BridgeParameter("group", BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.int)), false)]),
+      ),
+    },
+    getters: {
+      'pattern': BridgeMethodDef(BridgeFunctionDef(returns: BridgeTypeAnnotation($RegExp.$type))),
+      'groupNames': BridgeMethodDef(
+        BridgeFunctionDef(
+          returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.iterable, [BridgeTypeRef(CoreTypes.string)])),
+        ),
+      )
+    },
+    wrap: true,
+  );
 
   /// Wrap a [RegExpMatch] in a [$RegExpMatch]
   $RegExpMatch.wrap(this.$value) : _superclass = $Match.wrap($value);
@@ -196,18 +177,29 @@ class $RegExpMatch implements $Instance, RegExpMatch {
 
       case 'namedGroup':
         return $Function(__namedGroup.call);
+
+      case 'group':
+        return $Function(__group.call);
     }
     return _superclass.$getProperty(runtime, identifier);
   }
 
   static const $Function __namedGroup = $Function(_namedGroup);
 
-  static $Value _namedGroup(
-      final Runtime runtime, final $Value? target, final List<$Value?> args) {
+  static $Value _namedGroup(final Runtime runtime, final $Value? target, final List<$Value?> args) {
     final group = (args[0] as $String).$value;
 
     final $result = (target!.$value as RegExpMatch).namedGroup(group);
 
+    return $result == null ? $null() : $String($result);
+  }
+
+  // Group method
+  static const $Function __group = $Function(_group);
+
+  static $Value _group(Runtime runtime, $Value? target, List<$Value?> args) {
+    final groupNum = (args[0] as $int).$value;
+    final $result = (target!.$value as RegExpMatch).group(groupNum);
     return $result == null ? $null() : $String($result);
   }
 
