@@ -5,9 +5,23 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   /// Wrap a [Map] in a [$Map]
   $Map.wrap(this.$value);
 
+  /// Register factory methods
+  static void configureForRuntime(Runtime runtime) {
+    runtime.registerBridgeFunc(CoreTypes.map.library, CoreTypes.map.name, __$Map$from.call, isBridge: false);
+  }
+
   static const $declaration = BridgeClassDef(
       BridgeClassType(BridgeTypeRef(CoreTypes.map), generics: {'K': BridgeGenericParam(), 'V': BridgeGenericParam()}),
-      constructors: {},
+      constructors: {
+        'from': BridgeConstructorDef(
+          BridgeFunctionDef(
+              returns: BridgeTypeAnnotation(
+                BridgeTypeRef(CoreTypes.map),
+              ),
+              params: [BridgeParameter("other", BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.map)), false)]),
+          isFactory: true,
+        )
+      },
       methods: {
         '[]': BridgeMethodDef(
           BridgeFunctionDef(params: [
@@ -206,15 +220,22 @@ class $Map<K, V> implements Map<K, V>, $Instance {
   void forEach(void Function(K key, V value) action) {
     return $value.forEach(action);
   }
+
   static const __$forEach = $Function(_$forEach);
-  static $Value? _$forEach(
-      Runtime runtime, $Value? target, List<$Value?> args) {
+  static $Value? _$forEach(Runtime runtime, $Value? target, List<$Value?> args) {
     final $this = target?.$value as Map;
     final action = args[0] as EvalCallable;
     $this.forEach(
-      ( key, value) => action.call(runtime, null, [key, value]),
+      (key, value) => action.call(runtime, null, [key, value]),
     );
     return null;
+  }
+
+   static const __$Map$from = $Function(_$Map$from);
+  static $Value? _$Map$from(
+      Runtime runtime, $Value? target, List<$Value?> args) {
+    final $map = args[0]?.$value as Map;
+    return $Map.wrap(Map.from($map));
   }
 
   @override
